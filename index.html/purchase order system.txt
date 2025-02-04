@@ -1,0 +1,8 @@
+/purchase-order-system/
+  ├── index.html
+  ├── order.html
+  ├── login.html
+  ├── register.html
+  ├── styles.css
+  └── script.js
+

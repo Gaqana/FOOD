@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Form</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Order Form Section -->
+    <section class="order-container">
+        <h1>Place Your Order</h1>
+        <form id="order-form">
+            <!-- Food Items -->
+            <div class="menu-category">
+                <h2>Food</h2>
+                <label>
+                    <input type="checkbox" class="item" data-price="5" /> pap (R5)
+                </label><br>
+                <label>
+                    <input type="checkbox" class="item" data-price="30" /> pap and chicken (R30)
+                </label><br>
+                <label>
+                    <input type="checkbox" class="item" data-price="30" /> pap and wors (R30)
+                </label><br>
+                <label>
+                    <input type="checkbox" class="item" data-price="30" /> pap and steak (R30)
+                </label><br>
+                <label>
+                    <input type="checkbox" class="item" data-price="15" /> Fries R15 SMALL
+                </label><br>
+                <label>
+                    <input type="checkbox" class="item" data-price="20" /> Fries R20 Medium
+                </label><br>
+                <label>
+                    <input type="checkbox" class="item" data-price="30" /> Fries 30 Large
+                </label><br>
+            </div>
+
+            <!-- Drink Items -->
+            <div class="menu-category">
+                <h2>Drinks</h2>
+                <label>
+                    <input type="checkbox" class="item" data-price="12" /> switch energy drinks (R12)
+                </label><br>
+                <label>
+                    <input type="checkbox" class="item" data-price="5" /> Water (R5)
+                </label><br>
+                <label>
+                    <input type="checkbox" class="item" data-price="16" /> cocacola (R16)
+                </label><br>
+                <label>
+                    <input type="checkbox" class="item" data-price="16" /> sprite (R16)
+                </label><br>
+                <label>
+                    <input type="checkbox" class="item" data-price="16" /> fanta (R16)
+                </label><br>
+                <label>
+                    <input type="checkbox" class="item" data-price="16" /> cappy (R16)
+                </label><br>
+                <label>
+                    <input type="checkbox" class="item" data-price="16" /> 100% juice (R16)
+                </label><br>
+            </div>
+
+            <div class="total-section">
+                <h3>Total Amount: R<span id="total-amount">0.00</span></h3>
+            </div>
+
+            <!-- Submission Button -->
+            <div class="submit-section">
+                <button type="submit" class="submit-button">Submit Order</button>
+            </div>
+
+            <!-- Order Number Display -->
+            <div id="order-number" class="order-number"></div>
+        </form>
+    </section>
+
+    <script src="script.js"></script>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: lightblue;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .order-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu-category {
+            margin-bottom: 20px;
+        }
+
+        .menu-category h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .menu-category label {
+            font-size: 18px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .total-section {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        #total-amount {
+            color: green;
+        }
+
+        .submit-section {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .submit-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .submit-button:hover {
+            background-color: #45a049;
+        }
+
+        .order-number {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const checkboxes = document.querySelectorAll('.item');
+        const totalAmountElement = document.getElementById('total-amount');
+        const orderForm = document.getElementById('order-form');
+        const orderNumberElement = document.getElementById('order-number');
+
+        // Function to update the total price
+        function updateTotal() {
+            let total = 0;
+
+            // Loop through each checkbox and add the price to total if it's checked
+            checkboxes.forEach(function (checkbox) {
+                if (checkbox.checked) {
+                    total += parseFloat(checkbox.getAttribute('data-price'));
+                }
+            });
+
+            // Update the total amount displayed
+            totalAmountElement.textContent = total.toFixed(2);
+        }
+
+        // Function to generate a unique order number
+        function generateOrderNumber() {
+            return 'ORD' + Math.floor(Math.random() * 1000000);
+        }
+
+        // Add event listeners to all checkboxes
+        checkboxes.forEach(function (checkbox) {
+            checkbox.addEventListener('change', updateTotal);
+        });
+
+        // Handle form submission
+        orderForm.addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Generate and display the order number
+            const orderNumber = generateOrderNumber();
+            orderNumberElement.textContent = 'Your Order Number: ' + orderNumber;
+
+            // Simulate displaying the order number on the seller's side (for example, log to console)
+            console.log('New Order Submitted: Order Number - ' + orderNumber);
+        });
+    });
+</script>
+
